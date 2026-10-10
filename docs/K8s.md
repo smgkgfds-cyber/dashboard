@@ -61,3 +61,41 @@ kubectl scale deployment corporate-data-deployment --replicas=3
 ```
 kubec
 ```
+
+## Service
+
+Для предоставления стабильной точки доступа к приложению создан Service:
+
+```
+corporate-data-service.
+```
+
+Service выбирает Pod по метке:
+
+```
+app=corporate-data-app
+```
+
+18
+Service принимает запросы на порту 80 и передает их приложению на порт 8000.
+
+## ConfigMap
+
+Для хранения параметров конфигурации создан ConfigMap:
+
+```
+corporate-data-config
+```
+
+В ConfigMap находятся не конфиденциальные параметры подключения к PostgreSQL и
+параметры среды приложения.
+
+## Масштабирование
+
+Приложение управляется Deployment:
+
+```
+corporate-data-deployment
+```
+
+Итоговое количество экземпляров приложения: 2
