@@ -44,3 +44,29 @@
 
 ```bash
 docker build -t corporate-data-app:2.0 ./app
+
+```
+
+## Kubernetes
+
+Приложение может быть развернуто в локальном Kubernetes-кластере Docker Desktop.
+Манифесты находятся в каталоге
+```
+kubernetes/
+```
+Основной Deployment:
+```
+corporate-data-deployment
+```
+PostgreSQL запускается отдельно через Docker Compose:
+```
+docker compose up -d db
+```
+Запуск Kubernetes-конфигурации:
+```
+kubectl apply -f kubernetes/deployment.yaml
+```
+Проверка:
+```
+kubectl get pods
+```

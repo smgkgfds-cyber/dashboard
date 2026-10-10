@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: corporate-data-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: corporate-data-app
+  template:
+    metadata:
+      labels:
+        app: corporate-data-app
+    spec:
+      containers:
+        - name: corporate-data-app
+          image: corporate-data-app:2.0
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DB_HOST
+              value: host.docker.internal
+            - name: DB_PORT
+              value: '5432'
+            - name: DB_NAME
+              value: corporate
+            - name: DB_USER
+              value: corporate_user
+            - name: DB_PASSWORD
+              value: corporate_password
