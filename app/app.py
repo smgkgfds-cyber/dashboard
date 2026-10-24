@@ -48,7 +48,6 @@ class PlatformHandler(BaseHTTPRequestHandler):
                     <td>{company[4]}</td>
                 </tr>
                 """
-
             html = f"""
             <!DOCTYPE html>
             <html lang="ru">
@@ -63,7 +62,9 @@ class PlatformHandler(BaseHTTPRequestHandler):
 
                 <p>Статус приложения: работает</p>
 
-                <p>Версия приложения: 2.0</p>
+                <p>Версия приложения: 2.2.0</p>
+
+                <p>Среда развертывания: Kubernetes</p>
 
                 <p>Контейнеризация: Docker</p>
 
