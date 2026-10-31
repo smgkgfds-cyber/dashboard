@@ -13,3 +13,10 @@ Thumbs.db
 # Temporary files
 *.tmp
 *.log
+
+# Airflow
+airflow/logs/
+
+# Python
+__pycache__/
+*.pyc
