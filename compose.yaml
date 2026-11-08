@@ -31,17 +31,40 @@ services:
       db:
         condition: service_healthy
 
+  rustfs:
+    image: rustfs/rustfs:latest
+    container_name: corporate-rustfs
+    environment:
+      RUSTFS_ACCESS_KEY: rustfsadmin
+      RUSTFS_SECRET_KEY: rustfssecret123
+      RUSTFS_ADDRESS: '0.0.0.0:9000'
+      RUSTFS_CONSOLE_ADDRESS: '0.0.0.0:9001'
+      RUSTFS_CONSOLE_ENABLE: 'true'
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      - rustfs_data:/data
+    command: /data
+
   airflow:
     image: apache/airflow:3.1.0
     container_name: corporate-airflow
     depends_on:
       db:
         condition: service_healthy
+      rustfs: 
+        condition: service_started
     environment:
       AIRFLOW__CORE__LOAD_EXAMPLES: 'false'
       AIRFLOW__CORE__DAGS_FOLDER: '/opt/airflow/dags'
       AIRFLOW__CORE__EXECUTOR: 'LocalExecutor'
       AIRFLOW__DATABASE__SQL_ALCHEMY_CONN: 'postgresql+psycopg2://corporate_user:corporate_password@db:5432/airflow_meta'
+
+      RUSTFS_ENDPOINT: 'http://rustfs:9000'
+      RUSTFS_ACCESS_KEY: 'rustfsadmin'
+      RUSTFS_SECRET_KEY: 'rustfssecret123'
+      RUSTFS_PROCESSED_BUCKET: 'corporate-processed'
 
       DB_HOST: 'db'
       DB_PORT: '5432'
@@ -59,9 +82,10 @@ services:
 
     command: >
       bash -c "
-      pip install --no-cache-dir psycopg2-binary 'psycopg[binary]' &&
+      pip install --no-cache-dir 'psycopg[binary]' boto3 &&
       airflow standalone
       "
 
 volumes:
+  rustfs_data:
   postgres_data:
