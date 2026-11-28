@@ -85,7 +85,6 @@ kubectl get pods
 - Аналитический модуль корпоративной платформы.
 - Позволяет выполнять SQL-запросы к данным CSV и объектам Data Lake, рассчитывать сводные показатели и формировать отчеты.
 
-
 ### NetworkX
 
 - Графовый аналитический модуль корпоративной платформы.
@@ -106,3 +105,14 @@ kubectl get pods
 
 Визуализация:
 `analytics/reports/company_graph.png`
+
+## Grafana
+
+- Для визуализации корпоративных данных используется Grafana.
+- Источник данных: PostgreSQL.
+- Веб-интерфейс: http://localhost:3000
+- Dashboard: Corporate Data Platform – Overview
+
+Конфигурация Dashboard:
+
+grafana/dashboards/corporate-overview.json
