@@ -86,6 +86,21 @@ services:
       airflow standalone
       "
 
+  grafana:
+    image: grafana/grafana:12.3.0
+    container_name: corporate-grafana
+    ports:
+      - "3000:3000"
+    environment:
+      GF_SECURITY_ADMIN_USER: admin
+      GF_SECURITY_ADMIN_PASSWORD: admin12345
+    volumes:
+      - grafana_data:/var/lib/grafana
+    depends_on:
+      - db
+    restart: unless-stopped
+
 volumes:
   rustfs_data:
   postgres_data:
+  grafana_data:
